@@ -21,7 +21,7 @@ public class WebLogger {
 	
 	public static void error(String message) {
 		String date = LocalDateTime.now().format(ISIDATE);
-		System.out.printf(GREEN+"%15s "+WHITE+"%s\n"+RESET, date, message);
+		System.out.printf(GREEN+"%15s "+RED+"%s\n"+RESET, date, message);
 	}
 
 	public static void welcome() {
