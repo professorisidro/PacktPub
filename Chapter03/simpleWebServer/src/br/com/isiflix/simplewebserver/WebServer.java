@@ -8,6 +8,8 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.isiflix.simplewebserver.util.WebLogger;
+
 public class WebServer {
 
 	private int port = 80;
@@ -18,7 +20,7 @@ public class WebServer {
 		try {
 			this.serverSocket = new ServerSocket(this.port);
 		} catch (IOException ex) {
-			System.out.println("Couldn't initialize MySimpleWebServer on port " + port);
+			WebLogger.error("Couldn't initialize MySimpleWebServer on port " + port);
 		}
 		
 		while (true) {
@@ -28,7 +30,7 @@ public class WebServer {
 				socket.close();
 			}
 			catch(IOException ex) {	
-				System.out.println("I couln't handle request form client");
+				WebLogger.error("I couln't handle request form client");
 			}
 		}
 	}
@@ -49,14 +51,16 @@ public class WebServer {
 		
 		
 		
-		System.out.println("New request from "+socket.getInetAddress().getHostAddress());
+		WebLogger.log("New request from "+socket.getInetAddress().getHostAddress());
 		
 		try {
 			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			mainRequest = br.readLine();
-			System.out.println("Main Request = "+mainRequest);
+			WebLogger.log("Main Request = "+mainRequest);
 			destinationHost = br.readLine();
-			System.out.println("Dest   Host  = "+destinationHost);
+			WebLogger.log("Dest   Host  = "+destinationHost);
+			
+			
 			
 			do {
 				tmpLine = br.readLine();
@@ -68,12 +72,19 @@ public class WebServer {
 		}
 		
 		catch(Exception ex) {
-			System.out.println("Problems handling request from "+socket.getInetAddress().getHostAddress());
+			WebLogger.error("Problems handling request from "+socket.getInetAddress().getHostAddress());
 		}
 	}
 
 	private void handleOutput(Socket socket, String requestPath, String requestMethod, Map<String, String> params) {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	private String extractPath(String request) {
+		
+	}
+	private String extractHttpMethod(String request) {
 		
 	}
 
