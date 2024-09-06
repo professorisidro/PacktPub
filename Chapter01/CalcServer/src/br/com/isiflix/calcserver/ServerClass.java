@@ -11,55 +11,65 @@ import io.isiflix.calc.Response;
 public class ServerClass {
 	public static void main(String[] args) {
 		try {
+			// step 1
 			ServerSocket serverSocket = new ServerSocket(8350);
+			// step 2
 			while (true) {
+				// step 2.1
 				Socket socket = serverSocket.accept();
 				System.out.println("New connection!!");
-				
+
+				// step 2.2
 				ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 				Request req = (Request)in.readObject();
 				
 				System.out.println(req);
+				// step 2.3
 				Response rep = new Response();
-				// tratamento da request
+				// step 2.4 - handling data				
 				switch(req.getOper()) {
-				case "+":
+				case "+": // step 2.5
 					rep.setStatus("Ok");
 					rep.setValue(req.getOp1()+ req.getOp2());
 					break;
-				case "-":
+				case "-": // step 2.5
 					rep.setStatus("Ok");
 					rep.setValue(req.getOp1()- req.getOp2());
 					break;
-				case "*":
+				case "*": // step 2.5
 					rep.setStatus("Ok");
 					rep.setValue(req.getOp1()* req.getOp2());
-				case "^":
-					rep.setStatus("OK");
+				case "^": // step 2.5
+					// step 2.5
 					rep.setValue(Math.pow(req.getOp1(), req.getOp2()));
 				case "sqrt":
-					if (req.getOp1() >= 0) {
+					// step 2.5
+					if (req.getOp1() >= 0) {  
 						rep.setStatus("Ok");
 						rep.setValue(Math.sqrt(req.getOp1()));
 					}
-					else {
+					// step 2.6
+					else {  
 						rep.setStatus("Invalid");
 					}
 					break;
 				case "/":
+					// step 2.5
 					if (req.getOp2() != 0) {
 						rep.setStatus("Ok");
 						rep.setValue(req.getOp1() / req.getOp2());
 					}
+					// step 2.6
 					else {
 						rep.setStatus("Invalid");
 					}
 					break;
 				default:
+					// step 2.7
 					rep.setStatus("Unsupported");
 				}
 					
-				System.out.println(rep);
+				// step 2.8
 				ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 				out.writeObject(rep);
 				
