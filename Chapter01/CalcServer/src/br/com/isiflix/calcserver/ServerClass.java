@@ -39,9 +39,11 @@ public class ServerClass {
 				case "*": // step 2.5
 					rep.setStatus("Ok");
 					rep.setValue(req.getOp1()* req.getOp2());
+					break;
 				case "^": // step 2.5
 					// step 2.5
 					rep.setValue(Math.pow(req.getOp1(), req.getOp2()));
+				    break;
 				case "sqrt":
 					// step 2.5
 					if (req.getOp1() >= 0) {  
@@ -72,7 +74,7 @@ public class ServerClass {
 				// step 2.8
 				ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 				out.writeObject(rep);
-				
+				socket.close();				
 			}
 		}
 		catch(Exception ex) {
